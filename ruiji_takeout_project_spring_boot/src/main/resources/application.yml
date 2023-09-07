@@ -1,0 +1,24 @@
+spring:
+  main:
+    banner-mode: off
+  datasource:
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/db_ruiji
+      username: root
+      password: 8787521
+  servlet:
+    multipart:
+      max-request-size: 1GB
+      max-file-size: 100MB
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+  global-config:
+    banner: off
+    db-config:
+      # 设置进行表映射的时候，自动加上tb_前缀
+      table-prefix: tb_
+      # 配置主键生成策略
+      id-type: assign_id
