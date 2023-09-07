@@ -13,6 +13,10 @@
     <groupId>com.zisheng</groupId>
     <artifactId>ruiji_takeout_project</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>EntityClass</module>
+    </modules>
     <dependencies>
         <dependency>
             <groupId>com.alibaba</groupId>

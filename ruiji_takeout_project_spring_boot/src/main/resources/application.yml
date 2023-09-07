@@ -19,6 +19,6 @@ mybatis-plus:
     banner: off
     db-config:
       # 设置进行表映射的时候，自动加上tb_前缀
-      table-prefix: tb_
+#      table-prefix: tb_
       # 配置主键生成策略
       id-type: assign_id
