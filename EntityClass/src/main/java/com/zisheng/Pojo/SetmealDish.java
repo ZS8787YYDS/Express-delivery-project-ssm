@@ -38,7 +38,7 @@ public class SetmealDish   {
     //排序
     private Integer sort;
 
-
+    // 使用TableField注解，设置fill属性的值，当插入数据时会自动进行填充对应字段的值
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
