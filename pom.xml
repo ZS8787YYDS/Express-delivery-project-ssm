@@ -13,11 +13,41 @@
     <groupId>com.zisheng</groupId>
     <artifactId>ruiji_takeout_project</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <!--设置打包方式为pom，即该maven工程只负责管理依赖，不写代码-->
     <packaging>pom</packaging>
     <modules>
         <module>EntityClass</module>
+        <module>Configuration</module>
+        <module>Utils</module>
+        <module>ExceptionHandler</module>
     </modules>
     <dependencies>
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <version>2.3.5</version> <!-- 使用最新版本 -->
+        </dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>

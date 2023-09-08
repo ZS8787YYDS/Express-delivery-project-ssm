@@ -22,3 +22,4 @@ mybatis-plus:
 #      table-prefix: tb_
       # 配置主键生成策略
       id-type: assign_id
+signKey: zisheng
