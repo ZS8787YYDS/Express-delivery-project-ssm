@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,8 +36,7 @@ public class EmployeeController {
      * @return
      */
     @PostMapping("/login")
-    public Result registerFun(HttpServletRequest httpServletRequest, @RequestBody  Employee employee)
-    {
+    public Result registerFun(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody  Employee employee) throws IOException {
         log.info("接收到的数据为" + employee);
         // 获取页面传递过来的密码
         String pw = employee.getPassword();
