@@ -23,9 +23,10 @@
     </modules>
     <dependencies>
         <dependency>
+            <!-- 使用最新版本 -->
             <groupId>org.glassfish.jaxb</groupId>
             <artifactId>jaxb-runtime</artifactId>
-            <version>2.3.5</version> <!-- 使用最新版本 -->
+            <version>2.3.5</version>
         </dependency>
 
         <dependency>

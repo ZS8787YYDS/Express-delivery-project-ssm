@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Result {
     private Integer code;
-    private String meg;
+    private String msg;
     private Object data;
     public static final Result success()
     {
@@ -19,12 +19,8 @@ public class Result {
     {
         return new Result(1,"success",data);
     }
-    public static final Result error()
+    public static final Result error(String msg)
     {
-        return new Result(0,"failure",null);
-    }
-    public static final Result error(Object data)
-    {
-        return new Result(0,"failure",data);
+        return new Result(0,msg,null);
     }
 }

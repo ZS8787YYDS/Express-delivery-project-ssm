@@ -5,10 +5,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
 @MyAnnotation
+@ServletComponentScan// 开启Servlet组件支持
 public class RuijiTakeoutProjectSpringBootApplication {
     private static final Logger log = LoggerFactory.getLogger(RuijiTakeoutProjectSpringBootApplication.class);
     public static void main(String[] args) {
