@@ -2,6 +2,7 @@ package com.zisheng.Controller;
 
 import com.zisheng.MyUtils.JWTUtils;
 import com.zisheng.Pojo.Employee;
+import com.zisheng.Pojo.PageResult;
 import com.zisheng.Pojo.Result;
 import com.zisheng.Service.EmployeeService;
 import io.jsonwebtoken.Claims;
@@ -9,10 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,10 +23,7 @@ import java.util.Map;
 public class EmployeeController {
     private static final Logger log = LoggerFactory.getLogger(EmployeeController.class);// 创建日志记录对象，便于记录日志
     @Autowired
-    private JWTUtils jwtUtils;
-    @Autowired
     private EmployeeService employeeService;
-
     /**
      * 登录功能
      * @param httpServletRequest
@@ -63,8 +58,11 @@ public class EmployeeController {
         }
         else return Result.error("账号或密码错误！！！");
     }
+
     /**
      * 退出功能
+     * @param httpServletRequest
+     * @return
      */
     @PostMapping("/logout")
     public Result logout(HttpServletRequest httpServletRequest)
@@ -72,5 +70,65 @@ public class EmployeeController {
         // 将保存在session中的id移出
         httpServletRequest.getSession().removeAttribute("employee");
         return Result.success();
+    }
+
+    /**
+     * 插入功能
+     * @param httpServletRequest
+     * @param employee
+     * @return
+     */
+    @PostMapping
+    public Result insertEmp(HttpServletRequest httpServletRequest, @RequestBody Employee employee)
+    {
+        log.info("接收到的数据为:{}",employee.toString());
+        Integer id  = (Integer) httpServletRequest.getSession().getAttribute("employee");
+        employee.setCreateUser(id);
+        employee.setUpdateUser(id);
+        int insert = employeeService.isnertEmp(employee);
+        return Result.success(insert);
+    }
+
+    /**
+     * 分页功能
+     * @param page
+     * @param pageSize
+     * @param name
+     * @return
+     */
+    @GetMapping("/page")
+    public Result paging(Integer page,Integer pageSize,String name)
+    {
+        log.info("page: {},pageSize{}",page,pageSize);
+        PageResult pageResult = employeeService.paging(page,pageSize,name);
+        return Result.success(pageResult);
+    }
+
+    /**
+     * 查询功能
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    public Result searchEmp(@PathVariable Integer id)
+    {
+        log.info("id：" + id);
+        Employee employee = employeeService.searchEmp(id);
+        return Result.success(employee);
+    }
+
+    /**
+     * 编辑功能
+     * @param employee
+     * @return
+     */
+    @PutMapping
+    public Result modifyEmp(HttpServletRequest httpServletRequest, @RequestBody Employee employee)
+    {
+        log.info(employee.toString());
+        Integer updateId = (Integer) httpServletRequest.getSession().getAttribute("employee");
+        log.info(employee.toString());
+        employeeService.modifyEmp(employee,updateId);
+        return Result.success("修改成功！！");
     }
 }

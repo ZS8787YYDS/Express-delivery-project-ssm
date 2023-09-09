@@ -9,7 +9,6 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-//com.zisheng.Inteceptor.LoginInterceptor.class
-@Import({com.zisheng.MyUtils.JWTUtils.class})
+@Import({ com.zisheng.Config.MybatisPlusInterceptorConfig.class,com.zisheng.MyUtils.JWTUtils.class})
 public @interface MyAnnotation {
 }
