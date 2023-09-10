@@ -15,8 +15,7 @@ import java.time.LocalDateTime;
  */
 @Data
 public class Category{
-
-
+    // 主键id
     private Long id;
 
 
@@ -28,7 +27,8 @@ public class Category{
     private String name;
 
 
-    //顺序
+    //顺序，
+    // 1表示按照菜品进行排序，2表示按照套餐进行排序
     private Integer sort;
 
 
@@ -50,8 +50,7 @@ public class Category{
     //修改人
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateUser;
-
-
+    @TableField(exist = false)
     //是否删除
     private Integer isDeleted;
 
