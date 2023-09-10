@@ -36,7 +36,7 @@ public interface EmployeeService extends IService<Employee> {
      * @return
      */
 
-    Employee searchEmp(Integer id);
+    Employee searchEmp(Long id);
 
     /**
      * 修改操作
@@ -44,5 +44,5 @@ public interface EmployeeService extends IService<Employee> {
      * @param updateId
      */
 
-    void modifyEmp(Employee employee,Integer updateId);
+    void modifyEmp(Employee employee,Long updateId);
 }

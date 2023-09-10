@@ -82,7 +82,7 @@ public class EmployeeController {
     public Result insertEmp(HttpServletRequest httpServletRequest, @RequestBody Employee employee)
     {
         log.info("接收到的数据为:{}",employee.toString());
-        Integer id  = (Integer) httpServletRequest.getSession().getAttribute("employee");
+        Long id  = (Long) httpServletRequest.getSession().getAttribute("employee");
         employee.setCreateUser(id);
         employee.setUpdateUser(id);
         int insert = employeeService.isnertEmp(employee);
@@ -99,7 +99,7 @@ public class EmployeeController {
     @GetMapping("/page")
     public Result paging(Integer page,Integer pageSize,String name)
     {
-        log.info("page: {},pageSize{}",page,pageSize);
+        log.info("page: {},pageSize{}：",page,pageSize);
         PageResult pageResult = employeeService.paging(page,pageSize,name);
         return Result.success(pageResult);
     }
@@ -110,7 +110,7 @@ public class EmployeeController {
      * @return
      */
     @GetMapping("/{id}")
-    public Result searchEmp(@PathVariable Integer id)
+    public Result searchEmp(@PathVariable Long id)
     {
         log.info("id：" + id);
         Employee employee = employeeService.searchEmp(id);
@@ -126,8 +126,7 @@ public class EmployeeController {
     public Result modifyEmp(HttpServletRequest httpServletRequest, @RequestBody Employee employee)
     {
         log.info(employee.toString());
-        Integer updateId = (Integer) httpServletRequest.getSession().getAttribute("employee");
-        log.info(employee.toString());
+        Long updateId = (Long) httpServletRequest.getSession().getAttribute("employee");
         employeeService.modifyEmp(employee,updateId);
         return Result.success("修改成功！！");
     }

@@ -86,7 +86,7 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
      * @param id
      */
     @Override
-    public Employee searchEmp(Integer id) {
+    public Employee searchEmp(Long id) {
         QueryWrapper<Employee> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("id",id);
         Employee employee = employeeMapper.selectOne(queryWrapper);
@@ -98,7 +98,7 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
      * @param employee
      */
     @Override
-    public void modifyEmp(Employee employee,Integer updateId) {
+    public void modifyEmp(Employee employee,Long updateId) {
         employee.setUpdateUser(updateId);
         employee.setUpdateTime(LocalDateTime.now());
         employeeMapper.updateById(employee);

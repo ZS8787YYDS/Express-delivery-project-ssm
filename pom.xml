@@ -20,6 +20,7 @@
         <module>Configuration</module>
         <module>Utils</module>
         <module>ExceptionHandler</module>
+        <module>Converters</module>
     </modules>
     <dependencies>
         <dependency>

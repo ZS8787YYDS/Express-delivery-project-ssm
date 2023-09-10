@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class Employee {
-    private Integer id;
+    private Long id;
 
     private String username;
 
@@ -29,9 +29,9 @@ public class Employee {
     private LocalDateTime updateTime;
 
     @TableField(fill = FieldFill.INSERT)
-    private Integer createUser;
+    private Long createUser;
 
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Integer updateUser;
+    private Long updateUser;
 
 }

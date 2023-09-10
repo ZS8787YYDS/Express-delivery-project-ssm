@@ -17,9 +17,9 @@ mybatis-plus:
     map-underscore-to-camel-case: true
   global-config:
     banner: off
-#    db-config:
+    db-config:
       # 设置进行表映射的时候，自动加上tb_前缀
 #      table-prefix: tb_
       # 配置主键生成策略,采用雪花算法，生成的是一个64位的值，需要用Long类型去存储
-#      id-type: assign_id
+      id-type: assign_id
 signKey: zisheng
