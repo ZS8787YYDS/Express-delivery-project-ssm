@@ -2,6 +2,8 @@ package com.zisheng.Config;
 
 import com.zisheng.Converter.JacksonObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -10,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 
 import java.util.List;
 
-@Slf4j
+//@Slf4j
 @Configuration
 public class WebMVCConfiguration extends WebMvcConfigurationSupport {
     /**
@@ -20,6 +22,8 @@ public class WebMVCConfiguration extends WebMvcConfigurationSupport {
      * 第二步：重写addResourceHandlers方法，设置映射关系
      * @param registry
      */
+    // 创建日志记录对象
+    private static final Logger log = LoggerFactory.getLogger(WebMVCConfiguration.class);
     @Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
             log.info("开始进行静态资源映射");
@@ -44,5 +48,6 @@ public class WebMVCConfiguration extends WebMvcConfigurationSupport {
         messageConverter.setObjectMapper(new JacksonObjectMapper());
         // 将消息转换器对象添加到MVC框架的转化器集合当中，并且放在第一位
         converters.add(0,messageConverter);
+        log.info("消息转换器设置成功");
     }
 }

@@ -2,6 +2,7 @@ package com.zisheng.Filter;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zisheng.MyUtils.JWTUtils;
+import com.zisheng.MyUtils.ThreadUtils;
 import com.zisheng.Pojo.Result;
 import io.jsonwebtoken.Claims;
 import org.slf4j.Logger;
@@ -45,6 +46,7 @@ public class LoginFilter implements Filter {
         }
         // 判断是否已经登录
         if (httpServletRequest.getSession().getAttribute("employee") != null) {
+            ThreadUtils.setThreadLocal((Long) httpServletRequest.getSession().getAttribute("employee"));
             log.info("已经登陆，id为：{}", httpServletRequest.getSession().getAttribute("employee"));
             filterChain.doFilter(servletRequest, servletResponse);
             return;

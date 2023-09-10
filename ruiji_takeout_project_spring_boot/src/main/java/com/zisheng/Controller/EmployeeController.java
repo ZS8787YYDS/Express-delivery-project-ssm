@@ -82,9 +82,9 @@ public class EmployeeController {
     public Result insertEmp(HttpServletRequest httpServletRequest, @RequestBody Employee employee)
     {
         log.info("接收到的数据为:{}",employee.toString());
-        Long id  = (Long) httpServletRequest.getSession().getAttribute("employee");
-        employee.setCreateUser(id);
-        employee.setUpdateUser(id);
+//        Long id  = (Long) httpServletRequest.getSession().getAttribute("employee");
+//        employee.setCreateUser(id);
+//        employee.setUpdateUser(id);
         int insert = employeeService.isnertEmp(employee);
         return Result.success(insert);
     }
@@ -126,8 +126,8 @@ public class EmployeeController {
     public Result modifyEmp(HttpServletRequest httpServletRequest, @RequestBody Employee employee)
     {
         log.info(employee.toString());
-        Long updateId = (Long) httpServletRequest.getSession().getAttribute("employee");
-        employeeService.modifyEmp(employee,updateId);
+//        Long updateId = (Long) httpServletRequest.getSession().getAttribute("employee");
+        employeeService.modifyEmp(employee);
         return Result.success("修改成功！！");
     }
 }

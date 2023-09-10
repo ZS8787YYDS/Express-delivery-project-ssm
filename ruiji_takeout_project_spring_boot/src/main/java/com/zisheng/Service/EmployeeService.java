@@ -44,5 +44,5 @@ public interface EmployeeService extends IService<Employee> {
      * @param updateId
      */
 
-    void modifyEmp(Employee employee,Long updateId);
+    void modifyEmp(Employee employee );
 }

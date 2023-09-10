@@ -45,8 +45,8 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
     @Override
     public int isnertEmp( Employee employee) {
         employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
+//        employee.setCreateTime(LocalDateTime.now());
+//        employee.setUpdateTime(LocalDateTime.now());
         int insert = employeeMapper.insert(employee);
         return insert;
     }
@@ -98,9 +98,8 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
      * @param employee
      */
     @Override
-    public void modifyEmp(Employee employee,Long updateId) {
-        employee.setUpdateUser(updateId);
-        employee.setUpdateTime(LocalDateTime.now());
+    public void modifyEmp(Employee employee ) {
+//        employee.setUpdateTime(LocalDateTime.now());
         employeeMapper.updateById(employee);
     }
 }

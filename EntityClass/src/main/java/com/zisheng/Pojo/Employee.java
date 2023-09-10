@@ -23,8 +23,12 @@ public class Employee {
     private String idNumber;
 
     private Integer status;
+    // 在插入数据时会自动填充
+    @TableField(fill = FieldFill.INSERT)
 
     private LocalDateTime createTime;
+    // 在插入或者更新的时候会自动进行填充
+    @TableField(fill = FieldFill.INSERT_UPDATE)
 
     private LocalDateTime updateTime;
 

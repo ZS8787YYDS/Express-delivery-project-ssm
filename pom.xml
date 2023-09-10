@@ -21,6 +21,7 @@
         <module>Utils</module>
         <module>ExceptionHandler</module>
         <module>Converters</module>
+        <module>Handler</module>
     </modules>
     <dependencies>
         <dependency>
