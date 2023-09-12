@@ -26,6 +26,8 @@ import java.io.IOException;
 @WebFilter(urlPatterns = "/*")
 public class LoginFilter implements Filter {
     private static final Logger log = LoggerFactory.getLogger(LoginFilter.class);// 创建日志记录对象
+    private static final AntPathMatcher PATH_MATCHER = new AntPathMatcher();
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         log.info("初始化方法执行了!!!");
@@ -39,7 +41,13 @@ public class LoginFilter implements Filter {
 //        log.info("utl:{}",requestUrl);
         String requestURI = httpServletRequest.getRequestURI();
         log.info("urI:{}", requestURI);
-        if (requestURI.contains("login") || requestURI.contains("logout")) {
+        String[] paths = new String[]{
+                "/backend/**",
+                "/front/**",
+                "/employee/login",
+                "/employee/logout"
+        };
+        if (check(paths,requestURI)) {
             log.info("请求不需要处理: {}", requestURI);
             filterChain.doFilter(servletRequest, servletResponse);
             return;
@@ -63,5 +71,13 @@ public class LoginFilter implements Filter {
     @Override
     public void destroy() {
         log.info("销毁方法执行了！！！");
+    }
+    public boolean check(String[] paths,String uri)
+    {
+        for(String path : paths)
+        {
+            if(PATH_MATCHER.match(path,uri)) return true;
+        }
+        return false;
     }
 }

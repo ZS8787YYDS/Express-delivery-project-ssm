@@ -23,3 +23,10 @@ mybatis-plus:
       # 配置主键生成策略,采用雪花算法，生成的是一个64位的值，需要用Long类型去存储
       id-type: assign_id
 signKey: zisheng
+# 配置文件路径
+File:
+  url: D:/image/
+# Spring事务管理日志记录开关
+logging:
+  level:
+    org.springframework.jdbc.support.JdbcTransactionManager: debug

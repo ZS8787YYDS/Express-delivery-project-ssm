@@ -1,5 +1,6 @@
 package com.zisheng.Controller;
 
+import com.zisheng.Dto.DishDto;
 import com.zisheng.Pojo.Dish;
 import com.zisheng.Pojo.DishPagingResult;
 import com.zisheng.Pojo.Result;
@@ -81,5 +82,57 @@ public class DishController {
     {
         dishService.deleteBatch(ids);
         return Result.success();
+    }
+
+    /**
+     * 插入数据功能
+     * @param dishDto
+     * @return
+     */
+    @PostMapping
+    public Result insertDish(@RequestBody DishDto dishDto)
+    {
+        log.info("接收到的数据为：{}",dishDto);
+        dishService.insertDish(dishDto);
+        return Result.success();
+    }
+
+    /**
+     * 修改功能
+     * @param dishDto
+     * @return
+     */
+    @PutMapping
+    public Result updateDishData(@RequestBody DishDto dishDto)
+    {
+        dishService.updateDishData(dishDto);
+        return Result.success();
+    }
+
+    /**
+     * 查询功能
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    public Result searchDishes(@PathVariable Long id)
+    {
+        log.info("接收到的数据为：{}",id);
+        DishDto dish = dishService.searchDishes(id);
+        return Result.success(dish);
+    }
+
+    /**
+     * 查询功能
+     * @param categoryId
+     * @return
+     */
+    @GetMapping("/list")
+    public Result searchDishes_02(Long categoryId)
+    {
+        log.info("接收到的数据为：{}",categoryId);
+        List<Dish> dishes = dishService.searchDishes_02(categoryId);
+        return Result.success(dishes);
+
     }
 }
