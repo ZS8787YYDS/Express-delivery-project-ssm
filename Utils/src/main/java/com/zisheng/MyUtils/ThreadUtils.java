@@ -1,5 +1,8 @@
 package com.zisheng.MyUtils;
 
+/**
+ *
+ */
 public class ThreadUtils {
     // 创建一个ThreadLocal对象，指定泛型为Long，表示该变量存储的是Long类型的数据
     private static ThreadLocal<Long> threadLocal = new ThreadLocal<>();
