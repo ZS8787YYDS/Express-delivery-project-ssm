@@ -1,5 +1,7 @@
 package com.zisheng.Pojo;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -37,6 +39,7 @@ public class ShoppingCart   {
 
     //图片
     private String image;
+//    @TableField(fill = FieldFill.INSERT)
 
     private LocalDateTime createTime;
 }

@@ -87,6 +87,11 @@ public class SetMealController {
         return Result.success();
     }
 
+    /**
+     * 删除套餐功能
+     * @param ids
+     * @return
+     */
     @DeleteMapping
     public Result delteSetmeals(@RequestParam List<Long> ids)
     {
@@ -94,4 +99,19 @@ public class SetMealController {
         setMealService.deleteSetmeals(ids);
         return Result.success();
     }
+
+    /**
+     * 查询套餐功能
+     * @param categoryId
+     * @param status
+     * @return
+     */
+    @GetMapping("/list")
+    public Result findSetmeals(Long categoryId,Integer status)
+    {
+        log.info("接收到的信息：categoryId: {},status:{}",categoryId,status);
+        List<Setmeal> setmeals = setMealService.findSetmeals(categoryId,status);
+        return Result.success(setmeals);
+    }
+
 }

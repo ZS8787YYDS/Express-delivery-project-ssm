@@ -131,7 +131,7 @@ public class DishController {
     public Result searchDishes_02(Long categoryId)
     {
         log.info("接收到的数据为：{}",categoryId);
-        List<Dish> dishes = dishService.searchDishes_02(categoryId);
+        List<DishDto> dishes = dishService.searchDishes_02(categoryId);
         return Result.success(dishes);
 
     }

@@ -24,5 +24,5 @@ public interface DishService extends IService<Dish> {
 
     DishDto searchDishes(Long id);
 
-    List<Dish> searchDishes_02(Long categoryId);
+    List<DishDto> searchDishes_02(Long categoryId);
 }

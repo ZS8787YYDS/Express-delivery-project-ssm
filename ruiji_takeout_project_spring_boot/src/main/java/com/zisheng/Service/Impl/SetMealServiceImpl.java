@@ -148,4 +148,18 @@ public class SetMealServiceImpl extends ServiceImpl<SetMealMapper, Setmeal> impl
             setMealMapper.deleteById(o);
         });
     }
+
+    /**
+     * 查询套餐功能
+     * @param categoryId
+     * @param status
+     * @return
+     */
+    @Override
+    public List<Setmeal> findSetmeals(Long categoryId, Integer status) {
+        LambdaQueryWrapper<Setmeal> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(categoryId != null,Setmeal::getCategoryId,categoryId)
+                        .eq(status != null,Setmeal::getStatus,status);
+         return  setMealMapper.selectList(lambdaQueryWrapper);
+    }
 }

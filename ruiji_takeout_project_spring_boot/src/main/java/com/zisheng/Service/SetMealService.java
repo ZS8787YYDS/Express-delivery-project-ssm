@@ -19,4 +19,6 @@ public interface SetMealService extends IService<Setmeal> {
     void startSell(Integer status,List<Long> ids);
 
     void deleteSetmeals(List<Long> ids);
+
+    List<Setmeal> findSetmeals(Long categoryId, Integer status);
 }

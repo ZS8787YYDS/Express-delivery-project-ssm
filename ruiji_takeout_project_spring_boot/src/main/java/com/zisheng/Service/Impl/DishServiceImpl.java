@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements DishService {
@@ -182,14 +183,22 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
      * @return
      */
     @Override
-    public List<Dish> searchDishes_02(Long categoryId) {
-        // 创建条件对象
+    public List<DishDto> searchDishes_02(Long categoryId) {
         LambdaQueryWrapper<Dish> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         // 设置查询条件
-        lambdaQueryWrapper.eq(categoryId != null,Dish::getCategoryId,categoryId);
-        lambdaQueryWrapper.eq(Dish::getStatus,1);
+        lambdaQueryWrapper.eq(categoryId != null,Dish::getCategoryId,categoryId)
+                          .eq(Dish::getStatus,1);
         lambdaQueryWrapper.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
         List<Dish> dishes = dishMapper.selectList(lambdaQueryWrapper);
-        return dishes;
+        return  dishes.stream().map(o -> {
+            DishDto dishDto = new DishDto();
+            BeanUtils.copyProperties(o, dishDto);
+            Long dishId = o.getId();
+            LambdaQueryWrapper<DishFlavor> lambdaQueryWrapper1 = new LambdaQueryWrapper<>();
+            lambdaQueryWrapper1.eq(dishId != null, DishFlavor::getDishId, dishId);
+            List<DishFlavor> flavors = dishFlavorMapper.selectList(lambdaQueryWrapper1);
+            dishDto.setFlavors(flavors);
+            return dishDto;
+        }).collect(Collectors.toList());
     }
 }
