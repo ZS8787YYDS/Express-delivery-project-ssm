@@ -35,18 +35,19 @@ public class ShoppingCartServiceImpl extends ServiceImpl<ShoppingCartMapper, Sho
         lambdaQueryWrapper.eq(ShoppingCart::getUserId,ThreadUtils.getThreadLocal());
         if(dishId != null)
         {
-            // 为菜品
+            // 添加的为菜品
             lambdaQueryWrapper.eq(ShoppingCart::getDishId,dishId);
         }
         else
         {
-            // 为套餐
+            // 添加的为套餐
             lambdaQueryWrapper.eq(ShoppingCart::getSetmealId,setmealId);
         }
+        // 查询菜品或者套餐是否在购物车中
         ShoppingCart shoppingCart1 = shoppingCartMapper.selectOne(lambdaQueryWrapper);
         if(shoppingCart1 != null)
         {
-            // 当前菜品或者套餐在购物车中存在,在原有菜品或者套餐的基础上直接修改字段让其加1
+            // 当前菜品或者套餐在购物车中存在,在原有菜品或者套餐的基础上直接修改字段让其个数加1
             shoppingCart1.setNumber(shoppingCart1.getNumber() + 1);
             shoppingCartMapper.updateById(shoppingCart1);
         }
@@ -68,6 +69,7 @@ public class ShoppingCartServiceImpl extends ServiceImpl<ShoppingCartMapper, Sho
         Long dishId = shoppingCart.getDishId();
         Long setmealId = shoppingCart.getSetmealId();
         LambdaQueryWrapper<ShoppingCart> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(ShoppingCart::getUserId,ThreadUtils.getThreadLocal());
         if(dishId != null)
         {
             lambdaQueryWrapper.eq(ShoppingCart::getDishId,dishId);

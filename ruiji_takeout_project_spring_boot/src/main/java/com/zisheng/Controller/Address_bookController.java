@@ -91,4 +91,11 @@ public class Address_bookController {
         addressBookService.setDefaultValue(addressBook);
         return Result.success();
     }
+    @GetMapping("/default")
+    public Result getDefault()
+    {
+        log.info("获取默认的地址");
+        AddressBook addressBook = addressBookService.getDefault();
+        return Result.success(addressBook);
+    }
 }

@@ -45,4 +45,6 @@ public interface Address_bookService extends IService<AddressBook> {
      * @param addressBook
      */
     void setDefaultValue(AddressBook addressBook);
+
+    AddressBook getDefault();
 }

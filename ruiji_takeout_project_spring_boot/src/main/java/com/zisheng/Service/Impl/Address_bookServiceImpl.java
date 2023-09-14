@@ -1,5 +1,6 @@
 package com.zisheng.Service.Impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zisheng.Mapper.Address_bookMapper;
@@ -25,7 +26,9 @@ public class Address_bookServiceImpl extends ServiceImpl<Address_bookMapper, Add
      */
     @Override
     public List<AddressBook> searcAddress() {
-        return addressBookMapper.selectList(null);
+        LambdaQueryWrapper<AddressBook> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(AddressBook::getUserId,ThreadUtils.getThreadLocal());
+        return addressBookMapper.selectList(lambdaQueryWrapper);
     }
 
     /**
@@ -82,5 +85,16 @@ public class Address_bookServiceImpl extends ServiceImpl<Address_bookMapper, Add
         QueryWrapper<AddressBook> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda().eq(addressBook.getId() != null,AddressBook::getId,addressBook.getId());
         addressBookMapper.update(addressBook,queryWrapper);
+    }
+
+    /**
+     * 获取默认地址
+     * @return
+     */
+    @Override
+    public AddressBook getDefault() {
+        LambdaQueryWrapper<AddressBook> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(AddressBook::getIsDefault,1).eq(AddressBook::getUserId,ThreadUtils.getThreadLocal());
+        return  addressBookMapper.selectOne(lambdaQueryWrapper);
     }
 }
