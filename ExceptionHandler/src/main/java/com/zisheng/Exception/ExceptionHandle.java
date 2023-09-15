@@ -14,8 +14,8 @@ import java.sql.SQLIntegrityConstraintViolationException;
 @RestControllerAdvice// 表明该类为全局异常处理器，可以自动将返回的对象转换为JSON格式的字符串，响应给前端
 public class ExceptionHandle {
     private static final Logger log = LoggerFactory.getLogger(ExceptionHandle.class);// 日志记录对象
-    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)// 指定拦截到的异常的类型
-    public Result handleException(SQLIntegrityConstraintViolationException e)
+    @ExceptionHandler(Exception.class)// 指定拦截到的异常的类型：拦截所有的异常
+    public Result handleException(Exception e)
     {
         log.error(e.getMessage());// 将异常信息打印出来
         String excInfo = e.getMessage();
@@ -25,6 +25,6 @@ public class ExceptionHandle {
             String retInfo = split[2] + "已存在";
             return Result.error(retInfo);
         }
-        return Result.error("未知错误");
+        return Result.error("未知错误,请联系管理员");
     }
 }

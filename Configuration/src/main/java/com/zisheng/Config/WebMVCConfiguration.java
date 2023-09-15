@@ -12,6 +12,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 
 import java.util.List;
 
+/**
+ * 进行静态资源映射
+ */
 //@Slf4j
 @Configuration
 public class WebMVCConfiguration extends WebMvcConfigurationSupport {

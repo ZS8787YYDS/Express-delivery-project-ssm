@@ -38,8 +38,8 @@ public class LoginFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
 //        // 获取请求的url
-//        String requestUrl = httpServletRequest.getRequestURL().toString();
-//        log.info("utl:{}",requestUrl);
+        String requestUrl = httpServletRequest.getRequestURL().toString();
+        log.info("utl:{}",requestUrl);
         // 获取请求的URI地址，即接口
         String requestURI = httpServletRequest.getRequestURI();
         log.info("urI:{}", requestURI);

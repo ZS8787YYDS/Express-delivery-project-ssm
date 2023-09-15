@@ -22,6 +22,13 @@ public class ShortMessageController {
     private static final Logger log = LoggerFactory.getLogger(ShortMessageController.class);
     @Autowired
     private ShortMessageService shortMessageService;
+
+    /**
+     * 登录功能
+     * @param map
+     * @param httpServletRequest
+     * @return
+     */
     @PostMapping("/login")
     public Result login(@RequestBody Map<String,String> map, HttpServletRequest httpServletRequest)
     {
@@ -62,4 +69,17 @@ public class ShortMessageController {
         }
         return Result.error("登陆失败！");
     }
+
+    /**
+     * 退出功能
+     * @param httpServletRequest
+     * @return
+     */
+    @PostMapping("/loginout")
+    public Result loginOut(HttpServletRequest httpServletRequest)
+    {
+        httpServletRequest.getSession().removeAttribute("user");
+        return Result.success("退出成功！！！");
+    }
+
 }
