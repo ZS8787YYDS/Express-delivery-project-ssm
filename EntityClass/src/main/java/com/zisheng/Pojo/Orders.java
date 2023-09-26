@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
  * 订单
  */
 @Data
-public class Orders{
+public class Orders implements Serializable{
 
 
     private Long id;

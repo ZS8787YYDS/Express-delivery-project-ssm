@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 菜品口味
  */
 @Data
-public class DishFlavor {
+public class DishFlavor implements Serializable{
 
 
     private Long id;

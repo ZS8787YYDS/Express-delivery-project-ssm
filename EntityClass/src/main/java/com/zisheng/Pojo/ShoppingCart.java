@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
  * 购物车
  */
 @Data
-public class ShoppingCart   {
+public class ShoppingCart   implements Serializable{
 
 
     private Long id;

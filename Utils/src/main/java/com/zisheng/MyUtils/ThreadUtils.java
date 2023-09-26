@@ -1,7 +1,7 @@
 package com.zisheng.MyUtils;
 
 /**
- *
+ * 一个工具类，用于设置和获取ThreadLocal里面的值
  */
 public class ThreadUtils {
     // 创建一个ThreadLocal对象，指定泛型为Long，表示该变量存储的是Long类型的数据

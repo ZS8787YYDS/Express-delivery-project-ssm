@@ -8,14 +8,20 @@ import com.zisheng.Service.DishService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/dish")
 public class DishController {
-    private static final Logger log = LoggerFactory.getLogger(DishController.class);
+    @Resource
+    private RedisTemplate<String,Object> redisTemplate;// 注入redisTemplate对象，可以调用这个对象的方法去获取操作具体数据类型的对象
+    private static final Logger log = LoggerFactory.getLogger(DishController.class);// 创建日志记录对象
     @Autowired
     private DishService dishService;
 
@@ -69,6 +75,14 @@ public class DishController {
         log.info("接收到的数据为：id:{}",status);
         log.info("dishes:" + ids.toString());
         dishService.startSell(status,ids);
+        // 第一种方式，清理菜品所有分类的缓存
+        // 获取所有以category_开头的所有键，存放在set集合中
+        Set<String> keys = redisTemplate.keys("category_*");
+        // 清理redis中所有在集合当中的键
+        if(!ObjectUtils.isEmpty(keys)) redisTemplate.delete(keys);
+//        // 第二种方式：清理指定菜品分类的缓存
+//        String key = "category_" + dishDto.getCategoryId() + "_1";
+//        redisTemplate.delete(key);
         return Result.success();
     }
 
@@ -81,6 +95,12 @@ public class DishController {
     public Result DeleteBatch(@RequestParam List<Long> ids)
     {
         dishService.deleteBatch(ids);
+        // 第一种方式，清理菜品所有分类的缓存
+        Set<String> keys = redisTemplate.keys("category_*");
+        if(!ObjectUtils.isEmpty(keys)) redisTemplate.delete(keys);
+//        // 第二种方式：清理指定菜品分类的缓存
+//        String key = "category_" + dishDto.getCategoryId() + "_1";
+//        redisTemplate.delete(key);
         return Result.success();
     }
 
@@ -94,6 +114,14 @@ public class DishController {
     {
         log.info("接收到的数据为：{}",dishDto);
         dishService.insertDish(dishDto);
+        // 插入菜品之后，某一分类下的菜品就会发生改变，此时为了保证数据库中的数据和redis中数据的一致性
+        // 要注意清理缓存
+        // 第一种方式，清理菜品所有分类的缓存
+        Set<String> keys = redisTemplate.keys("category_*");
+        if(!ObjectUtils.isEmpty(keys)) redisTemplate.delete(keys);
+//        // 第二种方式：清理指定菜品分类的缓存
+//        String key = "category_" + dishDto.getCategoryId() + "_1";
+//        redisTemplate.delete(key);
         return Result.success();
     }
 
@@ -106,6 +134,12 @@ public class DishController {
     public Result updateDishData(@RequestBody DishDto dishDto)
     {
         dishService.updateDishData(dishDto);
+        // 第一种方式，清理菜品所有分类的缓存
+        Set<String> keys = redisTemplate.keys("category_*");
+        if(!ObjectUtils.isEmpty(keys)) redisTemplate.delete(keys);
+//        // 第二种方式：清理指定菜品分类的缓存
+//        String key = "category_" + dishDto.getCategoryId() + "_1";
+//        redisTemplate.delete(key);
         return Result.success();
     }
 

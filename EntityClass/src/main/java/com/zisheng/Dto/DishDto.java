@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DishDto extends Dish {
+public class DishDto extends Dish implements Serializable {
     private List<DishFlavor> flavors;
     private String categoryName;
     private Integer copies;

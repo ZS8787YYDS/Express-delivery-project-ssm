@@ -17,10 +17,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
+import javax.annotation.Resource;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,6 +34,8 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
     private DishMapper dishMapper;
     @Autowired
     private DishFlavorMapper dishFlavorMapper;
+    @Resource
+    private RedisTemplate<String,Object> redisTemplate;
     /**
      * 分页查询功能
      *
@@ -50,7 +56,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
     // 使用MybatisPlus分页插件
     @Override
     public DishPagingResult DishPaging(Integer page, Integer pageSize,String name) {
-        IPage iPage = new Page(page,pageSize);
+        IPage<Dish> iPage = new Page<>(page,pageSize);
         QueryWrapper<Dish> queryWrapper = new QueryWrapper<>();
         queryWrapper.likeRight(name != null,"name",name);
         dishMapper.selectPage(iPage,queryWrapper);
@@ -113,7 +119,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
         Dish dish = new Dish();
         // 将dishDto对象的属性值复制到dish对象当中，注意：只会复制类型和名称都相同的属性
         BeanUtils.copyProperties(dishDto,dish);
-        // 将菜品信心插入到数据库表中
+        // 将菜品信息插入到数据库表中
         dishMapper.insert(dish);
         // 获取该菜品的口味信息
         List<DishFlavor> flavors = dishDto.getFlavors();
@@ -178,21 +184,39 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
     }
 
     /**
-     * 查询功能
+     * 查询功能：
+     * 设计思路：先从redis中查询数据，如果查到的话直接返回
+     *         如果在redis中查询不到数据的话，就去查询数据库，将查询的结果缓存在redis中
      * @param categoryId
      * @return
      */
     @Override
     public List<DishDto> searchDishes_02(Long categoryId) {
+        /**
+         * 先从redis中查询数据，如果查到的话直接返回。如果在redis中查询不到数据的话，就去查询数据库，将查询的结果缓存在redis中
+         * 并且可以设置过期时间
+         */
+        // 自定义缓存的key
+        String key = "category_" + categoryId + "_1";
+        // 尝试从redis中查询数据
+        List<DishDto> dishDtoList = (List<DishDto>) redisTemplate.opsForValue().get(key);
+        if(!ObjectUtils.isEmpty(dishDtoList))
+        {
+            //在redis中查询成功，直接将结果返回即可
+            return dishDtoList;
+        }
+        // 在缓存中查询失败，从数据库中查询数据
         LambdaQueryWrapper<Dish> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         // 设置查询条件
         lambdaQueryWrapper.eq(categoryId != null,Dish::getCategoryId,categoryId)
                           .eq(Dish::getStatus,1);
         lambdaQueryWrapper.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
         List<Dish> dishes = dishMapper.selectList(lambdaQueryWrapper);
-        return  dishes.stream().map(o -> {
+        dishDtoList = dishes.stream().map(o -> {
             DishDto dishDto = new DishDto();
+            // 调用BeanUtils工具类的copyProperties方法进行属性赋值，注意是根据类型类属性名称进行复制的
             BeanUtils.copyProperties(o, dishDto);
+            // 获取菜品id，用于查询该菜品的所有口味信息
             Long dishId = o.getId();
             LambdaQueryWrapper<DishFlavor> lambdaQueryWrapper1 = new LambdaQueryWrapper<>();
             lambdaQueryWrapper1.eq(dishId != null, DishFlavor::getDishId, dishId);
@@ -200,5 +224,9 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
             dishDto.setFlavors(flavors);
             return dishDto;
         }).collect(Collectors.toList());
+        // 将查询的结果存储在redis当中,设置有效期限为一个小时。
+        // 调用redisTemplate对象的opsForValue方法获得操作String类型数据对象，调用set方法即可设置键以及对应的值。
+        redisTemplate.opsForValue().set(key,dishDtoList,60, TimeUnit.MINUTES);
+        return dishDtoList;
     }
 }

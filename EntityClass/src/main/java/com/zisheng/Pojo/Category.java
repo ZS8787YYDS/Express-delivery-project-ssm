@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  * 分类
  */
 @Data
-public class Category{
+public class Category implements Serializable{
     // 主键id
     private Long id;
 

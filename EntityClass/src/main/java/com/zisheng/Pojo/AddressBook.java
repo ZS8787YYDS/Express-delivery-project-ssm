@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
  * 地址簿
  */
 @Data
-public class AddressBook  {
+public class AddressBook implements Serializable {
 
 
     private Long id;
