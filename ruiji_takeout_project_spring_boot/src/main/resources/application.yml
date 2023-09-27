@@ -1,7 +1,4 @@
 spring:
-#  jackson:
-#    serialization:
-#      WRITE_DATES_AS_TIMESTAMPS: false
   main:
     banner-mode: off
   datasource:
@@ -25,6 +22,9 @@ spring:
         max-idle: 8
         max-wait: 1ms
         max-active: 8
+  cache:
+    redis:
+      time-to-live: 300000
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
