@@ -20,7 +20,7 @@ spring:
       slave:
         type: com.alibaba.druid.pool.DruidDataSource
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://localhost:3306/master_db
+        url: jdbc:mysql://192.168.59.1:3306/master_db
         username: zisheng
         password: 8787521
     masterslave:
@@ -40,7 +40,7 @@ spring:
       max-request-size: 1GB
       max-file-size: 100MB
   redis:
-    host: localhost
+    host: 192.168.59.1
     port: 6379
     password: 8787521
     database: 0

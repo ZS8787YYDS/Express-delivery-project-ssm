@@ -6,6 +6,10 @@ import com.zisheng.Pojo.PageResult;
 import com.zisheng.Pojo.Result;
 import com.zisheng.Service.EmployeeService;
 import io.jsonwebtoken.Claims;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
+@Api(tags = "员工相关接口")
 @RestController
 @RequestMapping("/employee")
 public class EmployeeController {
@@ -31,7 +35,11 @@ public class EmployeeController {
      * @return
      */
     @PostMapping("/login")
-    public Result registerFun(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody  Employee employee) throws IOException {
+    @ApiOperation(value = "登录接口")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "employee",value = "员工信息",required = true)
+    })
+    public Result registerFun(HttpServletRequest httpServletRequest, @RequestBody  Employee employee) throws IOException {
         log.info("接收到的数据为" + employee);
         // 获取页面传递过来的密码
         String pw = employee.getPassword();
@@ -65,6 +73,7 @@ public class EmployeeController {
      * @return
      */
     @PostMapping("/logout")
+    @ApiOperation(value = "退出接口")
     public Result logout(HttpServletRequest httpServletRequest)
     {
         // 将保存在session中的id移出
@@ -79,6 +88,7 @@ public class EmployeeController {
      * @return
      */
     @PostMapping
+    @ApiOperation(value = "插入接口")
     public Result insertEmp(HttpServletRequest httpServletRequest, @RequestBody Employee employee)
     {
         log.info("接收到的数据为:{}",employee.toString());

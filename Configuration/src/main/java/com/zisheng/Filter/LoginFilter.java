@@ -51,7 +51,11 @@ public class LoginFilter implements Filter {
                 "/employee/login",
                 "/employee/logout",
                 "/user/sendMsg",
-                "/user/login"
+                "/user/login",
+                "/doc.html",
+                "/webjars/**",
+                "/swagger-resources",
+                "/v2/api-docs"
         };
         // 如果说请求不需要进行处理的话
         if (check(paths,requestURI)) {

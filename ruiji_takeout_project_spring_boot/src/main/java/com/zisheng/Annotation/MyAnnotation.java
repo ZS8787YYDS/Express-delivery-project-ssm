@@ -9,6 +9,9 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import({ com.zisheng.Config.MybatisPlusInterceptorConfig.class,com.zisheng.MyUtils.JWTUtils.class,com.zisheng.Config.MyRedisTemplateConfig.class})
+@Import({ com.zisheng.Config.MybatisPlusInterceptorConfig.class,
+        com.zisheng.MyUtils.JWTUtils.class,
+        com.zisheng.Config.MyRedisTemplateConfig.class,
+        com.zisheng.Config.WebMVCConfiguration.class})
 public @interface MyAnnotation {
 }
