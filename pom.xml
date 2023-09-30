@@ -22,6 +22,7 @@
         <module>ExceptionHandler</module>
         <module>Converters</module>
         <module>Handler</module>
+        <module>ruiji_takeout_project_spring_boot</module>
     </modules>
     <dependencies>
         <dependency>
