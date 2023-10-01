@@ -30,7 +30,7 @@ public class SetMealController {
      * @return
      */
     @GetMapping("/page")
-    @Cacheable(value = "setmeal",key = "#page + '_' + #pageSize + '_' + #name",unless = "#result.data == null")
+//    @Cacheable(value = "setmeal",key = "#page + '_' + #pageSize + '_' + #name",unless = "#result.data == null")
     public Result setMealPaging(Integer page,Integer pageSize,String name)
     {
         log.info("接收到的数据为：page:{}, pageSize:{}",page,pageSize);
@@ -44,7 +44,7 @@ public class SetMealController {
      * @return
      */
     @PostMapping
-    @CacheEvict(value = "setmeal",allEntries = true) // 删除所有套餐的缓存
+//    @CacheEvict(value = "setmeal",allEntries = true) // 删除所有套餐的缓存
     public Result insertSetmeal(@RequestBody SetMealDto setMealDto)
     {
         log.info("接收到的数据为：{}",setMealDto);
@@ -58,7 +58,7 @@ public class SetMealController {
      * @return
      */
     @GetMapping("/{id}")
-    @Cacheable(value = "setmeal",key = "#id",unless = "#result.data == null")
+//    @Cacheable(value = "setmeal",key = "#id",unless = "#result.data == null")
     public Result searchSetmeal(@PathVariable Long id)
     {
         log.info("接收到的数据为:{}",id);
@@ -71,7 +71,7 @@ public class SetMealController {
      * @param setMealDto
      * @return
      */
-    @CacheEvict(value = "setmeal",allEntries = true)
+//    @CacheEvict(value = "setmeal",allEntries = true)
     @PutMapping
     public Result updateSetmeal(@RequestBody SetMealDto setMealDto)
     {
@@ -86,7 +86,7 @@ public class SetMealController {
      * @param ids
      * @return
      */
-    @CacheEvict(value = "setmeal",allEntries = true)
+//    @CacheEvict(value = "setmeal",allEntries = true)
     @PostMapping("/status/{status}")
     public Result startSell(@PathVariable Integer status, @RequestParam List<Long> ids)
     {
@@ -101,7 +101,7 @@ public class SetMealController {
      * @return
      */
     @DeleteMapping
-    @CacheEvict(value = "setmeal",allEntries = true)
+//    @CacheEvict(value = "setmeal",allEntries = true)
     public Result delteSetmeals(@RequestParam List<Long> ids)
     {
         log.info("接收到的信息为：{}",ids);
@@ -115,7 +115,7 @@ public class SetMealController {
      * @param status
      * @return
      */
-    @Cacheable(value = "setmeal",key = "#categoryId + '_' + #status",unless = "#result.data == null")
+//    @Cacheable(value = "setmeal",key = "#categoryId + '_' + #status",unless = "#result.data == null")
     @GetMapping("/list")
     public Result findSetmeals(Long categoryId,Integer status)
     {

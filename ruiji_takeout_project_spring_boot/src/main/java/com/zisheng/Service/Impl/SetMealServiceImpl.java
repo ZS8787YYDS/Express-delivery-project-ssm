@@ -104,7 +104,7 @@ public class SetMealServiceImpl extends ServiceImpl<SetMealMapper, Setmeal> impl
      * @param setMealDto
      */
     @Override
-    @Transactional
+//    @Transactional
     public void updateSetmeal(SetMealDto setMealDto) {
         Setmeal setmeal = new Setmeal();
         BeanUtils.copyProperties(setMealDto,setmeal);

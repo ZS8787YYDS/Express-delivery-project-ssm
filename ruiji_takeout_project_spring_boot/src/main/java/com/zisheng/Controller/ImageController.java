@@ -25,8 +25,8 @@ import java.util.UUID;
  */
 @RestController
 @RequestMapping("/common")
-public class CommonController {
-    private static final Logger log  = LoggerFactory.getLogger(CommonController.class);
+public class ImageController {
+    private static final Logger log  = LoggerFactory.getLogger(ImageController.class);
     @Value("${File.url}")
     private String fileUrl;
     /**
@@ -45,8 +45,9 @@ public class CommonController {
             newFileName = UUID.randomUUID().toString() + originalName.substring(originalName.lastIndexOf("."));
             // 创建File文件对象，与文件接通
             File file1 = new File(fileUrl);
-            // 如果文件不存在的，直接进行创建
+            // 如果文件不存在的话，直接进行创建
             if(!file1.exists()) file1.mkdirs();
+            // 将文件转储在本地
             file.transferTo(new File(fileUrl + newFileName));
         }
         log.info("上传之后获得的路径为：{}" + ( fileUrl + newFileName));
@@ -64,6 +65,7 @@ public class CommonController {
     {
         log.info("下载时接收到的文件名称为：{}",name);
         try(
+                // 创建文件字节输入流管道，与源文件接通
                 FileInputStream inputStream = new FileInputStream(fileUrl + name);
                 ServletOutputStream outputStream = response.getOutputStream();
                 ) {
@@ -71,9 +73,12 @@ public class CommonController {
             byte[] bytes = new byte[1024];
             // 设置响应给前端的内容类型
             response.setContentType("image/jpeg");
+            // 每次循环读取一个字节数组的内容，返回读取到的字节个数，只要个数不为-1，说明读取到了字节
             while((len = inputStream.read(bytes)) != -1)
             {
+                // 将读取到的字节通过字节输出流输出到浏览器中
                 outputStream.write(bytes,0,len);
+                // 刷新一下
                 outputStream.flush();
             }
         } catch (Exception e) {
